@@ -18,5 +18,7 @@ namespace Tarsalgo_2018
             Id = Convert.ToInt32(values[2]);
             IsIncoming = values[3] == "be";
         }
+
+        public int GetPassedMinutesSinceMidnight => Hours * 60 + Minutes;
     }
 }
