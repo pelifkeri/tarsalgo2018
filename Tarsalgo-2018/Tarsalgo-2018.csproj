@@ -6,4 +6,10 @@
     <RootNamespace>Tarsalgo_2018</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Update="ajto.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
