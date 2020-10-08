@@ -11,7 +11,7 @@ namespace Tarsalgo_2018
     {
         static List<Entry> Entries = new List<Entry>();
         static List<IGrouping<int, Entry>> EntriesGroupedById = new List<IGrouping<int, Entry>>();
-        static IGrouping<int, Entry> SelectedPerson;
+        static List<Entry> SelectedPersonsEntries;
 
         static void Main(string[] args)
         {
@@ -97,20 +97,22 @@ namespace Tarsalgo_2018
         {
             Console.WriteLine("Adja meg egy személy azonosítóját!");
             var id = Convert.ToInt32(Console.ReadLine());
-            SelectedPerson = EntriesGroupedById.Find(x => x.Key == id);
+            SelectedPersonsEntries = EntriesGroupedById
+                .Find(x => x.Key == id)
+                .ToList();
         }
 
         private static void Task7()
         {
-            for (int i = 0; i < SelectedPerson.Count(); i++)
+            for (int i = 0; i < SelectedPersonsEntries.Count(); i++)
             {
                 if (i % 2 == 0)
                 {
-                    Console.Write($"\n{SelectedPerson.ElementAt(i).Hours}:{SelectedPerson.ElementAt(i).Minutes}-");
+                    Console.Write($"\n{SelectedPersonsEntries[i].Hours}:{SelectedPersonsEntries[i].Minutes}-");
                 }
                 else
                 {
-                    Console.Write($"{SelectedPerson.ElementAt(i).Hours}:{SelectedPerson.ElementAt(i).Minutes}");
+                    Console.Write($"{SelectedPersonsEntries[i].Hours}:{SelectedPersonsEntries[i].Minutes}");
                 }
             }
         }
