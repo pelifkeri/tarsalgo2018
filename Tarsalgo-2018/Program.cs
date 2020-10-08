@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace Tarsalgo_2018
 {
@@ -10,6 +11,8 @@ namespace Tarsalgo_2018
     {
         static List<Entry> Entries = new List<Entry>();
         static List<IGrouping<int, Entry>> EntriesGroupedById = new List<IGrouping<int, Entry>>();
+        static IGrouping<int, Entry> SelectedPerson;
+
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.Unicode;
@@ -19,6 +22,8 @@ namespace Tarsalgo_2018
             Task3();
             Task4();
             Task5();
+            Task6();
+            Task7();
 
             Console.ReadLine();
         }
@@ -34,8 +39,10 @@ namespace Tarsalgo_2018
 
         private static void Task2()
         {
+            Console.WriteLine("2. feladat");
             Console.WriteLine($"Az első belépő: {Entries.First(x => x.IsIncoming).Id}");
             Console.WriteLine($"Az utolsó kilépő: {Entries.Last(x => !x.IsIncoming).Id}");
+            Console.WriteLine();
         }
 
         private static void Task3()
@@ -54,13 +61,18 @@ namespace Tarsalgo_2018
 
         private static void Task4()
         {
-            EntriesGroupedById.ForEach(person =>
+            Console.WriteLine("4. feladat");
+            var lastRemaining = EntriesGroupedById
+                .Where(x => x.Last().IsIncoming)
+                .ToList();
+
+            string ids = string.Empty;
+            lastRemaining.ForEach(person =>
             {
-                if (person.Last().IsIncoming)
-                {
-                    Console.WriteLine($"Az {person.Key} azonosítójú személy bent tartózkodott a vizsgált idő végén.");
-                }
+                ids += $"{person.Key} ";
             });
+            Console.WriteLine($"A végén a társalgóban voltak: {ids}");
+            Console.WriteLine();
         }
 
         private static void Task5()
@@ -79,6 +91,33 @@ namespace Tarsalgo_2018
             }
 
             Console.WriteLine($"{Entries[indexOfMaxReached].Hours}:{Entries[indexOfMaxReached].Minutes}-kor voltak a legtöbben a társalgóban.");
+        }
+
+        private static void Task6()
+        {
+            Console.WriteLine("Adja meg egy személy azonosítóját!");
+            var id = Convert.ToInt32(Console.ReadLine());
+            SelectedPerson = EntriesGroupedById.Find(x => x.Key == id);
+        }
+
+        private static void Task7()
+        {
+            for (int i = 0; i < SelectedPerson.Count(); i++)
+            {
+                if (i % 2 == 0)
+                {
+                    Console.Write($"\n{SelectedPerson.ElementAt(i).Hours}:{SelectedPerson.ElementAt(i).Minutes}-");
+                }
+                else
+                {
+                    Console.Write($"{SelectedPerson.ElementAt(i).Hours}:{SelectedPerson.ElementAt(i).Minutes}");
+                }
+            }
+        }
+
+        private static void Task8()
+        {
+
         }
     }
 }
